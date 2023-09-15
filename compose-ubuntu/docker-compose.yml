@@ -11,6 +11,7 @@ version: '3.1'
 
 services:
   db:
+    platform: linux/amd64
     image: postgres:latest
     restart: always
     environment:
@@ -24,6 +25,7 @@ services:
       - 5433:5432
 
   teamcity:
+    platform: linux/amd64
     image: jetbrains/teamcity-server:${TEAMCITY_VERSION}
     ports:
       - "8112:8111"
@@ -34,13 +36,16 @@ services:
       - db
 
   teamcity-agent-1:
+    platform: linux/amd64
     image: jetbrains/teamcity-agent:${TEAMCITY_VERSION}-linux-sudo
     privileged: true
     volumes:
       - ./agents/agent-1/conf:/data/teamcity_agent/conf
     environment:
       - DOCKER_IN_DOCKER=start
+
   teamcity-agent-2:
+    platform: linux/amd64
     image: jetbrains/teamcity-agent:${TEAMCITY_VERSION}-linux-sudo
     privileged: true
     volumes:
